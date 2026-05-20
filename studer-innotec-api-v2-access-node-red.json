@@ -1,0 +1,1469 @@
+[
+    {
+        "id": "60b3bdc76ad96855",
+        "type": "tab",
+        "label": "Studer V2 Get Data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3e458a8b6add4fc2",
+        "type": "group",
+        "z": "60b3bdc76ad96855",
+        "style": {
+            "stroke": "#2b2b2b",
+            "stroke-opacity": "1",
+            "fill": "#181818",
+            "fill-opacity": "0.5",
+            "label": true,
+            "label-position": "nw",
+            "color": "#cccccc"
+        },
+        "nodes": [
+            "3fed7dbf9e4fa3e1",
+            "5bdef34da5b8f62f"
+        ],
+        "x": 188,
+        "y": 213,
+        "w": 1464,
+        "h": 1414
+    },
+    {
+        "id": "3fed7dbf9e4fa3e1",
+        "type": "group",
+        "z": "60b3bdc76ad96855",
+        "g": "3e458a8b6add4fc2",
+        "name": "",
+        "style": {
+            "fill": "#3f93cf",
+            "label": true
+        },
+        "nodes": [
+            "9d78fc0c60d25c68",
+            "3dfa38663c7c0f86",
+            "78b4d7e76b8a66d2",
+            "5ad9d864dfd964cd",
+            "35c1dbf0b4eb9372",
+            "f850721b40242836",
+            "a5682c0aecda2d7b",
+            "9345dbca015a282a",
+            "2f48292c95eeb398",
+            "b9630a7443fd140c",
+            "1834e7c7d7011be4",
+            "82b4fbd81f2f24d3",
+            "1280d6fe744fa161",
+            "41f9720525dd6410",
+            "548853af09a0eea9",
+            "aa67f60acc6db5e7",
+            "16f469775bb44507",
+            "6189613060c7b680",
+            "fb19638222b8bb84",
+            "e13e9c0bdbc3693a",
+            "262a7e4767c6f4f8",
+            "f9cf1d686a54b822",
+            "13fa0d50b5bbbecd",
+            "da08da86cf8c877c",
+            "a8b858783653e44c"
+        ],
+        "x": 214,
+        "y": 539,
+        "w": 1412,
+        "h": 1062
+    },
+    {
+        "id": "5bdef34da5b8f62f",
+        "type": "group",
+        "z": "60b3bdc76ad96855",
+        "g": "3e458a8b6add4fc2",
+        "name": "",
+        "style": {
+            "fill": "#3f93cf",
+            "label": true
+        },
+        "nodes": [
+            "dce407bcce963567",
+            "ea91769386ca7b48",
+            "6ae52e56af5d29ab",
+            "665087448a9c02e2",
+            "3984bb240e8534de",
+            "14a5c4f9bdbade34",
+            "ec4268dbc4bcfe82",
+            "92a594079d4cc574",
+            "a58b031e3026ebfc"
+        ],
+        "x": 234,
+        "y": 239,
+        "w": 1352,
+        "h": 242
+    },
+    {
+        "id": "dce407bcce963567",
+        "type": "inject",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Request Token with password",
+        "props": [
+            {
+                "p": "payload.grant_type",
+                "v": "password",
+                "vt": "str"
+            },
+            {
+                "p": "payload.username",
+                "v": "your username here",
+                "vt": "str"
+            },
+            {
+                "p": "payload.password",
+                "v": "your password here",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "x": 410,
+        "y": 300,
+        "wires": [
+            [
+                "ea91769386ca7b48"
+            ]
+        ]
+    },
+    {
+        "id": "ea91769386ca7b48",
+        "type": "http request",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "request token http request",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.studer-innotec.com/api/v2/auth",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 700,
+        "y": 300,
+        "wires": [
+            [
+                "ec4268dbc4bcfe82",
+                "a58b031e3026ebfc"
+            ]
+        ]
+    },
+    {
+        "id": "6ae52e56af5d29ab",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Prepare refresh request",
+        "func": "var newMsg = { payload:{\n    \"grant_type\":\"refresh_token\",\n    \"access_token\": flow.get(\"access_token\"),\n    \"refresh_token\": flow.get(\"refresh_token\"),\n    \"token_type\": \"bearer\",\n    \"expires_in\":3600\n    } };\nreturn newMsg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 440,
+        "wires": [
+            [
+                "92a594079d4cc574"
+            ]
+        ]
+    },
+    {
+        "id": "665087448a9c02e2",
+        "type": "inject",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "For testing",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "6ae52e56af5d29ab"
+            ]
+        ]
+    },
+    {
+        "id": "3984bb240e8534de",
+        "type": "api-call-service",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Set Access Token",
+        "server": "825b48cc.bbee28",
+        "version": 7,
+        "debugenabled": false,
+        "action": "input_text.set_value",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.studer_token"
+        ],
+        "labelId": [],
+        "data": "{\"value\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "input_text",
+        "service": "set_value",
+        "x": 1470,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "14a5c4f9bdbade34",
+        "type": "api-call-service",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Set Refresh Token",
+        "server": "825b48cc.bbee28",
+        "version": 7,
+        "debugenabled": false,
+        "action": "input_text.set_value",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [
+            "input_text.studer_refresh_token"
+        ],
+        "labelId": [],
+        "data": "{\"value\":\"{{payload}}\"}",
+        "dataType": "json",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "input_text",
+        "service": "set_value",
+        "x": 1470,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec4268dbc4bcfe82",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Split the message",
+        "func": "flow.set(\"access_token\", msg.payload.access_token)\nflow.set(\"refresh_token\", msg.payload.refresh_token)\n\nvar msg1 = { payload: \"Bearer \"+msg.payload.access_token };\nvar msg2 = { payload: msg.payload.refresh_token };\nreturn [msg1, msg2];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 300,
+        "wires": [
+            [
+                "3984bb240e8534de"
+            ],
+            [
+                "14a5c4f9bdbade34"
+            ]
+        ]
+    },
+    {
+        "id": "92a594079d4cc574",
+        "type": "http request",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "Refresh token http request",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.studer-innotec.com/api/v2/auth",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json"
+            }
+        ],
+        "x": 920,
+        "y": 440,
+        "wires": [
+            [
+                "ec4268dbc4bcfe82",
+                "a58b031e3026ebfc"
+            ]
+        ]
+    },
+    {
+        "id": "a58b031e3026ebfc",
+        "type": "delay",
+        "z": "60b3bdc76ad96855",
+        "g": "5bdef34da5b8f62f",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "3590",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 410,
+        "y": 380,
+        "wires": [
+            [
+                "6ae52e56af5d29ab"
+            ]
+        ]
+    },
+    {
+        "id": "da08da86cf8c877c",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Get the structure and display in debug window",
+        "entityConfig": "69c69d41cd2857e9",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1120,
+        "y": 580,
+        "wires": [
+            [
+                "a8b858783653e44c"
+            ]
+        ]
+    },
+    {
+        "id": "a8b858783653e44c",
+        "type": "debug",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "debug 20",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1440,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "9d78fc0c60d25c68",
+        "type": "http request",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "get DATA http request",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api2.studer-innotec.com/api/v2/installations/your installation id here/synoptic/",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Accept",
+                "valueType": "other",
+                "valueValue": "application/json"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 820,
+        "y": 700,
+        "wires": [
+            [
+                "5ad9d864dfd964cd",
+                "a5682c0aecda2d7b",
+                "2f48292c95eeb398",
+                "1834e7c7d7011be4",
+                "1280d6fe744fa161",
+                "548853af09a0eea9",
+                "fb19638222b8bb84",
+                "f9cf1d686a54b822",
+                "da08da86cf8c877c"
+            ]
+        ]
+    },
+    {
+        "id": "3dfa38663c7c0f86",
+        "type": "inject",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Every two minutes",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "120",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 700,
+        "wires": [
+            [
+                "78b4d7e76b8a66d2"
+            ]
+        ]
+    },
+    {
+        "id": "78b4d7e76b8a66d2",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Set the token in msg",
+        "func": "var msg = { payload: \"Bearer \" + flow.get(\"access_token\") };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 700,
+        "wires": [
+            [
+                "9d78fc0c60d25c68"
+            ]
+        ]
+    },
+    {
+        "id": "5ad9d864dfd964cd",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_solar_power W & kW",
+        "func": "var studer_solar_power_kw = msg.payload.data.power.solar.value\nvar studer_solar_power_w = studer_solar_power_kw*1000\n\nflow.set(\"studer.solarpower_watts\", studer_solar_power_w)\nflow.set(\"studer.solarpower_kw\", studer_solar_power_kw)\nvar msg1 = { payload: studer_solar_power_w };\nvar msg2 = { payload: studer_solar_power_kw };\n//flow.set(\"access_token\", msg.payload.access_token)\n//flow.set(\"refresh_token\", msg.payload.refresh_token)\n\n//var msg1 = { payload: \"Bearer \"+msg.payload.access_token };\n//var msg2 = { payload: msg.payload.refresh_token };\nreturn [msg1, msg2];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 740,
+        "wires": [
+            [
+                "35c1dbf0b4eb9372"
+            ],
+            [
+                "f850721b40242836"
+            ]
+        ]
+    },
+    {
+        "id": "35c1dbf0b4eb9372",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Solar Power W",
+        "entityConfig": "096de9a109afc2ba",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1390,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f850721b40242836",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Solar Power kW",
+        "entityConfig": "688596b761d6aa30",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1400,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a5682c0aecda2d7b",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_solar_production kWh",
+        "func": "//!! resets daily !!\nvar studer_solar_production_kwh = msg.payload.data.energy.solar.value\n\n\nflow.set(\"studer.solar_production_kwh\", studer_solar_production_kwh)\nvar msg1 = { payload: studer_solar_production_kwh };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 820,
+        "wires": [
+            [
+                "9345dbca015a282a"
+            ]
+        ]
+    },
+    {
+        "id": "9345dbca015a282a",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Solar Production kWh",
+        "entityConfig": "fde86406e91ff9a8",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1410,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f48292c95eeb398",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_grid_consumed kWh",
+        "func": "\nvar studer_grid_consumed_kwh = msg.payload.data.energy.gridConsumed.value\n\n\nflow.set(\"studer.grid_consumed_kwh\", studer_grid_consumed_kwh)\nvar msg1 = { payload: studer_grid_consumed_kwh };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 920,
+        "wires": [
+            [
+                "b9630a7443fd140c"
+            ]
+        ]
+    },
+    {
+        "id": "b9630a7443fd140c",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Grid Consumed kWh",
+        "entityConfig": "86ecba506e642b9d",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1430,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1834e7c7d7011be4",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_battery_charge kWh",
+        "func": "\nvar studer_battery_charge_kwh = msg.payload.data.energy.batteryCharge.value\n\n\nflow.set(\"studer.battery_charge_kwh\", studer_battery_charge_kwh)\nvar msg1 = { payload: studer_battery_charge_kwh };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1020,
+        "wires": [
+            [
+                "82b4fbd81f2f24d3"
+            ]
+        ]
+    },
+    {
+        "id": "82b4fbd81f2f24d3",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery Charge kWh",
+        "entityConfig": "5b96fc044fff87c9",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1450,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1280d6fe744fa161",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_battery_discharge kWh",
+        "func": "\nvar studer_battery_discharge_kwh = msg.payload.data.energy.batteryDischarge.value\n\n\nflow.set(\"studer.battery_discharge_kwh\", studer_battery_discharge_kwh)\nvar msg1 = { payload: studer_battery_discharge_kwh };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 1100,
+        "wires": [
+            [
+                "41f9720525dd6410"
+            ]
+        ]
+    },
+    {
+        "id": "41f9720525dd6410",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery Discharge kWh",
+        "entityConfig": "3fbb236bb5ba31eb",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1460,
+        "y": 1100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "548853af09a0eea9",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_battery_in_out kW & W",
+        "func": "var studer_battery_power = msg.payload.data.battery.power.value//extracted value is in kW\nvar studer_battery_power_w = Math.abs(studer_battery_power*1000)//transform in W\nvar studer_battery_power_w_abs = Math.abs(studer_battery_power_w)//abs value\n\nvar msg1 = { payload: 0 };\nvar msg2 = { payload: 0 };\nif (studer_battery_power >= 0){//if above 0 then power is going in the batteries\n    flow.set(\"studer.battery_power_in_w\", studer_battery_power_w_abs)\n    flow.set(\"studer.battery_power_out_w\", 0)\n    msg1 = { payload: studer_battery_power_w_abs };\n}else if(studer_battery_power < 0){//if power is below 0 then power is going out\n    flow.set(\"studer.battery_power_in_w\", 0)\n    flow.set(\"studer.battery_power_out_w\", studer_battery_power_w_abs)\n    msg2 = { payload: studer_battery_power_w_abs };\n}\n\nflow.set(\"studer.battery_power_kw\", studer_battery_power)\nflow.set(\"studer.battery_power_w\", studer_battery_power_w)\nvar msg3 = { payload: studer_battery_power };\nvar msg4 = { payload: studer_battery_power_w };\n\nreturn [msg1,msg2,msg3,msg4];",
+        "outputs": 4,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1090,
+        "y": 1260,
+        "wires": [
+            [
+                "aa67f60acc6db5e7"
+            ],
+            [
+                "16f469775bb44507"
+            ],
+            [
+                "6189613060c7b680"
+            ],
+            [
+                "262a7e4767c6f4f8"
+            ]
+        ]
+    },
+    {
+        "id": "aa67f60acc6db5e7",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery In W",
+        "entityConfig": "260f91d5b012528a",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1420,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16f469775bb44507",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery Out W",
+        "entityConfig": "f9ed8dc98c7d5c6f",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1430,
+        "y": 1260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6189613060c7b680",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery Power in-Out kW",
+        "entityConfig": "37667511542f1d43",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1460,
+        "y": 1320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb19638222b8bb84",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_battery_soc",
+        "func": "\nvar studer_battery_soc = msg.payload.data.battery.soc.value\n\nflow.set(\"studer.battery_soc\", studer_battery_soc)\nvar msg1 = { payload: studer_battery_soc };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 1440,
+        "wires": [
+            [
+                "e13e9c0bdbc3693a"
+            ]
+        ]
+    },
+    {
+        "id": "e13e9c0bdbc3693a",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery SOC",
+        "entityConfig": "e20e13111dc4b489",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1430,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "262a7e4767c6f4f8",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 Battery Power in-Out W",
+        "entityConfig": "566ba0cd9f82cab5",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1460,
+        "y": 1380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f9cf1d686a54b822",
+        "type": "function",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "studer_house_consumption",
+        "func": "\nvar studer_house_consumption = msg.payload.data.power.loads.value\n\nflow.set(\"studer.house_consumption\", studer_house_consumption)\nvar msg1 = { payload: studer_house_consumption };\n\nreturn msg1;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1560,
+        "wires": [
+            [
+                "13fa0d50b5bbbecd"
+            ]
+        ]
+    },
+    {
+        "id": "13fa0d50b5bbbecd",
+        "type": "ha-sensor",
+        "z": "60b3bdc76ad96855",
+        "g": "3fed7dbf9e4fa3e1",
+        "name": "Studer V2 House Consumption",
+        "entityConfig": "1baad8d1aaa78e88",
+        "version": 0,
+        "state": "payload",
+        "stateType": "msg",
+        "attributes": [],
+        "inputOverride": "allow",
+        "outputProperties": [],
+        "x": 1450,
+        "y": 1560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "825b48cc.bbee28",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": true,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30,
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": "at: ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "h23",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": true
+    },
+    {
+        "id": "69c69d41cd2857e9",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer3",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer3"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "096de9a109afc2ba",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Solar Power W",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Solar Power W"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "W"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "688596b761d6aa30",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Solar Power kW",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Solar Power kW"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kW"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "fde86406e91ff9a8",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Solar Production kWh",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Solar Production kWh"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "energy"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kWh"
+            },
+            {
+                "property": "state_class",
+                "value": "total_increasing"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "86ecba506e642b9d",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Grid Consumed kWh",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Grid Consumed kWh"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "energy"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kWh"
+            },
+            {
+                "property": "state_class",
+                "value": "total_increasing"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "5b96fc044fff87c9",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery Charge kWh",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery Charge kWh"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "energy"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kWh"
+            },
+            {
+                "property": "state_class",
+                "value": "total_increasing"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "3fbb236bb5ba31eb",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery Discharge kWh",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery Discharge kWh"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "energy"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kWh"
+            },
+            {
+                "property": "state_class",
+                "value": "total_increasing"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "260f91d5b012528a",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery In W",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery In W"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "W"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "f9ed8dc98c7d5c6f",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery Out W",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery Out W"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "W"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "37667511542f1d43",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery Power in-Out kW",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery Power in-Out kW"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kW"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "e20e13111dc4b489",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery SOC",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery SOC"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "%"
+            },
+            {
+                "property": "state_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "566ba0cd9f82cab5",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 Battery Power in-Out W",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 Battery Power in-Out W"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "W"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "1baad8d1aaa78e88",
+        "type": "ha-entity-config",
+        "server": "825b48cc.bbee28",
+        "deviceConfig": "",
+        "name": "Studer V2 House Consumption",
+        "version": 6,
+        "entityType": "sensor",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": "Studer V2 House Consumption"
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": "power"
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": "kW"
+            },
+            {
+                "property": "state_class",
+                "value": "measurement"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "09c3ac29b26491c7",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-home-assistant-websocket": "0.80.3"
+        }
+    }
+]
