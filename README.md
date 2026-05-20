@@ -9,16 +9,28 @@ A working Studer-Innotec installation connected to their portal: https://portal.
 Studer-Innotec login credentials obviously
 Your installation Id (a set of numbers) which you can find here: https://portal.studer-innotec.com/Installation
 
-#Steps
+# How to
+
+## Step 1 helpers
 Create two helpers:
 - Input Text helper named: Studer_token
 - Input Text helper named: Studer_Refresh_token
   To create helpers go to Settings -> Device and services -> helpers -> create helper -> text
 
-Import the Node-Red flow from the file
-To import go to Node-Red, then the top right menu -> import and paste the code
+## Step 2 import
+Import the Node-Red flow from the file: studer-innotec-api-v2-access-node-red.json
+To import go to Node-Red, then the top right menu -> import and paste the code or upload the .json file
+You should now have a structure that looks like the image below
+Do not deploy yet as some edits are required
 
-You will most likely have to manually create the sensors.
+## Step 3 credentials
+Edit the first node named "Request Token with Password" and add your username and password in the correct fields
+
+## Step 4 Installation Id
+Open the settings for the node named "get DATA http request" and edit the url by replacing the set of number with your installation Id
+
+## Step 5 sensors
+You will most likely have to manually create the sensors for your Home Assistant instance.
 
 List of sensor to create via Node-Red:
 
