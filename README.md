@@ -1,4 +1,4 @@
-# Getting Studer-Innotec data to Home Assistant via Node-Red
+# Getting Studer-Innotec API v2 data to Home Assistant via Node-Red
 This short guide explains how to get data from the Studer-Innotec API V2 to Home Assistant using Node-Red
 
 ### References
