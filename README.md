@@ -24,8 +24,8 @@ Create two helpers in Home Assistant:
 ## Step 2 import
 - Import the Node-Red flow from the file: [***studer-innotec-api-v2-access-node-red.json***](studer-innotec-api-v2-access-node-red.json)  
 - To import go to Node-Red, then the top right menu -> import and paste the code or directly upload the .json file  
-- You should now have a structure that looks like the image below  
-- No use deploying now as some edits are required
+- It will create a new ***Studer V2 Get Data*** tab and you should have a structure that looks like the image below  
+- Do not deploy yet as some edits are required for things to work
 <img width="1532" height="1460" alt="structure" src="https://github.com/user-attachments/assets/86fa0c31-c2b1-4701-8e35-2ff5cca75482" />
 
 
