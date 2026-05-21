@@ -129,7 +129,10 @@ Device class: power
 Unit of measurement: kW  
 state class: measurement  
 
-## Step 6 Deploy, test and adapt
-- Try to deploy the modified nodes, trigger manually if need be and look at the debug panel for any errors
+## Step 6 Deploy, test and modify
+- Try to deploy the modified nodes. It should automatically try to get a new token after 30s and get data every two minutes.
+- The first attempt to get data may fail as it tries to inject right away the start the 2min timer, don't worry
+- Look at the debug panel for any errors afterwards
+- If the get token part fails, there is may be a problem with your credentials
 - All created sensors will appear in the Entities list of Home Assistant, search for ***studer v2***
 - Now you can edit to your liking. To access the list of available data, connect the ***Get the structure and display in debug window*** Node and redeploy. An object will appear in your debug window containing all the available data from the synoptic request for API v2, look through it and ignore the error message.
