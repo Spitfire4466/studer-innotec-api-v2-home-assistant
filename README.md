@@ -1,4 +1,4 @@
-# Getting Studer-Innotec API v2 data to Home Assistant via Node-Red
+# Getting data from Studer-Innotec API v2 to Home Assistant via Node-Red
 This short guide explains how to get data from the Studer-Innotec API V2 to Home Assistant using Node-Red
 
 ### References
@@ -131,7 +131,7 @@ state class: measurement
 
 ## Step 6 Deploy, test and modify
 - Try to deploy the modified nodes. It should automatically try to get a new token after 30s and get data every two minutes.
-- The first attempt to get data may fail as it tries to inject right away the start the 2min timer, don't worry
+- Don't worry if the first attempt to get data may fail as it tries to inject when nodes are deployed, then it will request every 2min. Avoid manually spamming the inject nodes as it will stack timers on the delay node and make a mess.
 - Look at the debug panel for any errors afterwards
 - If the get token part fails, there is may be a problem with your credentials
 - All created sensors will appear in the Entities list of Home Assistant, search for ***studer v2***
